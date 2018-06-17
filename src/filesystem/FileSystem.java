@@ -56,6 +56,7 @@ public class FileSystem {
        
     }
     
+    //Crea un directorio, devuelve -1 si existe otro con el mismo nombre
     public int crearDirectorio(String nombre, Directorio padre){
         
         for(Directorio i : instance.getDirectorioActual().getdHijo()){
@@ -68,6 +69,7 @@ public class FileSystem {
         return 0;
     }
     
+    //Accede y devuelve directorio recibiendo la ruta de este, si no lo encuentra devuelve null
     public static Directorio accederDirectorio(String ruta){
         String[] listaAcceso = ruta.split("/");
         ArrayList<String>listDef = new ArrayList<>();
@@ -78,22 +80,23 @@ public class FileSystem {
         
         Directorio dirTemp = instance.getRoot();
         for(String i : listDef){
-            System.out.println("1for");
+          //  System.out.println("1for");
             dirTemp = searchDirectorio(i,dirTemp);
             if(dirTemp == null){
-                System.out.println("1if");
+               // System.out.println("1if");
                 return null;
             }
         }
         return dirTemp;
     }
     
+    
     public static Directorio searchDirectorio(String nombre, Directorio padre){
         Directorio dir = null;
         for(Directorio i : padre.getdHijo()){
-            System.out.println("2for");
+            //System.out.println("2for");
             if(i.getNombre().equals(nombre)){
-                System.out.println("2if");
+                //System.out.println("2if");
                 return i;
             }
         }
@@ -101,7 +104,7 @@ public class FileSystem {
     }
     
     
-    
+    //Crea archivo devuelve -1 si ya existe
     public int crearArchivo(String extension, String nombre, String contenido){
         for(Archivo i : instance.getDirectorioActual().getListaArchivos()){
             if(i.getNombre().equals(nombre) && i.getExtension().equals(extension)){
@@ -119,7 +122,7 @@ public class FileSystem {
         return 0;
     }
     
-    
+    //Busca archivo en todo fileSystem
     public static Directorio leer(Directorio raiz,String nombre,String ruta,String extension){
         if(!raiz.getListaArchivos().isEmpty()){
             Archivo archivo1 = searchFile(raiz.getListaArchivos(),nombre,extension);
@@ -137,6 +140,7 @@ public class FileSystem {
        return null;
     }
     
+    //Busca y devuelve archivo, recibe la lista de archivos, nombre y extension
     public static Archivo searchFile(ArrayList<Archivo> listaArchivos, String nombre,String extension){
         for(Archivo i : listaArchivos){
             if(i.nombre.equals(nombre) && i.extension.equals(extension)){
