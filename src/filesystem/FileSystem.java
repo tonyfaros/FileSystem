@@ -5,7 +5,10 @@
  */
 package filesystem;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ListIterator;
 
 /**
@@ -26,16 +29,17 @@ public class FileSystem {
        Directorio hijo2 = new Directorio("hijo2",hijo1);
        raiz.addDirectorio(hijo1);
        hijo1.addDirectorio(hijo2);
-       Archivo ar1 = new Archivo(10, ".txt","archivo1","01-01-01","01-01-01","asdf",2,hijo1);
+       Archivo ar1 = new Archivo(".txt","archivo1","01-01-01","01-01-01","asdf",2,hijo2);
        raiz.addArchivo(ar1);
        hijo1.addArchivo(ar1);
        hijo2.addArchivo(ar1);
-       
+       ar1.setRuta(ar1, hijo2);
+       System.out.println(ar1.getRuta());
        //Directorio clone =  new Directorio(raiz);
        //clone.getListaArchivos().remove(0);
        
        
-       leer(raiz,"archivo1","/root/",".txt");
+       //leer(raiz,"archivo1","/root/",".txt");
        
     }
     
@@ -51,7 +55,20 @@ public class FileSystem {
         return 0;
     }
     
-    public int crearArchivo(String extension, String nombre){
+    public int crearArchivo(String extension, String nombre, String contenido){
+        for(Archivo i : instance.getDirectorioActual().getListaArchivos()){
+            if(i.getNombre().equals(nombre) && i.getExtension().equals(extension)){
+                return -1;
+            }
+        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        String fecha  = dateFormat.format(date).toString();
+        
+        Archivo archivo = new Archivo(extension, nombre, fecha, fecha,contenido,0,instance.getDirectorioActual());
+        
+        
+        //System.out.println(dateFormat.format(date));
         return 0;
     }
     
