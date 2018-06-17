@@ -5,7 +5,12 @@
  */
 package filesystem;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.ListIterator;
 
 /**
@@ -13,6 +18,8 @@ import java.util.ListIterator;
  * @author Anthony-PC
  */
 public class FileSystem {
+    
+     private static Globales instance= Globales.getInstance();
 
     /**
      * @param args the command line arguments
@@ -24,53 +31,119 @@ public class FileSystem {
        main.setVisible(true);
        
        Directorio raiz = new Directorio("raiz",null);
+       instance.setRoot(raiz);
        FileSys fileSys = new FileSys(raiz,10,500,"raiz");
        Directorio hijo1 = new Directorio("hijo1",raiz);
+       Directorio hijo2 = new Directorio("hijo2",hijo1);
        raiz.addDirectorio(hijo1);
-       
-       Archivo ar1 = new Archivo(10, ".txt","archivo1","01-01-01","01-01-01","asdf",2,hijo1);
+       hijo1.addDirectorio(hijo2);
+       Archivo ar1 = new Archivo(".txt","archivo1","01-01-01","01-01-01","asdf",2,hijo2);
        raiz.addArchivo(ar1);
        hijo1.addArchivo(ar1);
-       Directorio clone =  new Directorio(raiz);
-       clone.getListaArchivos().remove(0);
+       hijo2.addArchivo(ar1);
+       ar1.setRuta(ar1, hijo2);
+       System.out.println(ar1.getRuta());
+       String s = "/raiz/hijo1/";
+       
+       // System.out.println(Arrays.toString(s.split("/")));
+       Directorio prueba1 = accederDirectorio("/raiz/hijo1/");
+       System.out.println(prueba1.getNombre());
+       //Directorio clone =  new Directorio(raiz);
+       //clone.getListaArchivos().remove(0);
        
        
-       leer(clone,"archivo1");
+       //leer(raiz,"archivo1","/root/",".txt");
        
     }
     
-    public static void leer(Directorio raiz,String nombre){
+    public int crearDirectorio(String nombre, Directorio padre){
         
-        System.out.println(raiz.getListaArchivos().size());
-        int cont = 0;
-        int largo = raiz.getdHijo().size();
-        //ListIterator  lit;
-        //for(Directorio i : raiz.dHijo){
-            
-        //}
-       // lit = raiz.dHijo.listIterator();
+        for(Directorio i : instance.getDirectorioActual().getdHijo()){
+            if(i.getNombre().equals(nombre)){
+                return -1;
+            }
+        }
+       
+        Directorio directorio = new Directorio(nombre, padre);
+        return 0;
     }
     
-    public static Archivo searchFile(ArrayList<Archivo> listaArchivos, String nombre){
+    public static Directorio accederDirectorio(String ruta){
+        String[] listaAcceso = ruta.split("/");
+        ArrayList<String>listDef = new ArrayList<>();
+        for(int i = 2; i<listaAcceso.length; i++){
+            listDef.add(listaAcceso[i]);
+            System.out.println(listaAcceso[i]);
+        }
+        
+        Directorio dirTemp = instance.getRoot();
+        for(String i : listDef){
+            System.out.println("1for");
+            dirTemp = searchDirectorio(i,dirTemp);
+            if(dirTemp == null){
+                System.out.println("1if");
+                return null;
+            }
+        }
+        return dirTemp;
+    }
+    
+    public static Directorio searchDirectorio(String nombre, Directorio padre){
+        Directorio dir = null;
+        for(Directorio i : padre.getdHijo()){
+            System.out.println("2for");
+            if(i.getNombre().equals(nombre)){
+                System.out.println("2if");
+                return i;
+            }
+        }
+        return dir;
+    }
+    
+    
+    
+    public int crearArchivo(String extension, String nombre, String contenido){
+        for(Archivo i : instance.getDirectorioActual().getListaArchivos()){
+            if(i.getNombre().equals(nombre) && i.getExtension().equals(extension)){
+                return -1;
+            }
+        }
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        String fecha  = dateFormat.format(date).toString();
+        
+        Archivo archivo = new Archivo(extension, nombre, fecha, fecha,contenido,0,instance.getDirectorioActual());
+        
+        
+        //System.out.println(dateFormat.format(date));
+        return 0;
+    }
+    
+    
+    public static Directorio leer(Directorio raiz,String nombre,String ruta,String extension){
+        if(!raiz.getListaArchivos().isEmpty()){
+            Archivo archivo1 = searchFile(raiz.getListaArchivos(),nombre,extension);
+            if(archivo1 != null){
+                System.out.println("Ruta: "+ruta);
+            }
+        }
+        
+        if(!raiz.getdHijo().isEmpty()){
+            for(Directorio i : raiz.getdHijo()){
+                return leer(i,nombre,ruta+i.getNombre()+"/",extension);
+             
+            }
+        }
+       return null;
+    }
+    
+    public static Archivo searchFile(ArrayList<Archivo> listaArchivos, String nombre,String extension){
         for(Archivo i : listaArchivos){
-            if(i.nombre.equals(nombre)){
-                System.out.println("Encontrado");
+            if(i.nombre.equals(nombre) && i.extension.equals(extension)){
                 return i;
             }
         }
         return null;
-    }
-    
-    /*public static Archivo recursive1(Directorio dirActual, String nombre){
-        Archivo archivoTemp = searchFile(dirActual.listaArchivos, nombre);
-        if(archivoTemp != null){
-            return archivoTemp;
-        }
-        else if(!dirActual.dHijo.isEmpty()){
-            return recursive1(dirActual.dHijo.get(0),nombre);
-        }
-       
-    }*/
-    
+    }    
     
 }

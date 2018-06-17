@@ -6,7 +6,7 @@ package filesystem;
  * @author Anthony-PC
  */
 public class Archivo {
-    int tamano;
+    //int tamano;
     String extension;
     String nombre;
     String fechaCreacion;
@@ -14,10 +14,11 @@ public class Archivo {
     String contenido;
     int numSector;
     Directorio dPadre;
+    String ruta;
 
-    public Archivo(int tamano, String extension, String nombre, String fechaCreacion, String fechaMod, String contenido, 
+    public Archivo(/*int tamano,*/ String extension, String nombre, String fechaCreacion, String fechaMod, String contenido, 
             int numSector, Directorio dPadre) {
-        this.tamano = tamano;
+       // this.tamano = tamano;
         this.extension = extension;
         this.nombre = nombre;
         this.fechaCreacion = fechaCreacion;
@@ -25,6 +26,7 @@ public class Archivo {
         this.contenido = contenido;
         this.numSector = numSector;
         this.dPadre = dPadre;
+        this.ruta = "";
     }
 
     public Directorio getdPadre() {
@@ -35,14 +37,14 @@ public class Archivo {
         this.dPadre = dPadre;
     }
     
-    public int getTamano() {
+  /*  public int getTamano() {
         return tamano;
     }
 
     public void setTamano(int tamano) {
         this.tamano = tamano;
     }
-
+*/
     public String getExtension() {
         return extension;
     }
@@ -89,6 +91,23 @@ public class Archivo {
 
     public void setNumSector(int numSector) {
         this.numSector = numSector;
+    }
+    
+    public void setRuta(Archivo archivo, Directorio dirActual){
+        String ruta = archivo.getNombre()+archivo.getExtension();
+        while(dirActual.getNombre() != "raiz"){
+             ruta = dirActual.getNombre() + "/"+ ruta;
+            dirActual = dirActual.dPadre;
+        }
+        ruta = "/raiz/" + ruta;
+        archivo.setDefRuta(ruta);
+    }
+    
+    public void setDefRuta(String ruta){
+        this.ruta = ruta;
+    }
+    public String getRuta(){
+        return ruta;
     }
    
 }
