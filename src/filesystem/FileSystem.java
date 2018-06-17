@@ -18,6 +18,11 @@ public class FileSystem {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws CloneNotSupportedException {
+        
+        
+       Main main = new Main();
+       main.setVisible(true);
+       
        Directorio raiz = new Directorio("raiz",null);
        FileSys fileSys = new FileSys(raiz,10,500,"raiz");
        Directorio hijo1 = new Directorio("hijo1",raiz);
