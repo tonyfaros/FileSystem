@@ -8,7 +8,9 @@ package filesystem;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.ListIterator;
 
 /**
@@ -17,13 +19,14 @@ import java.util.ListIterator;
  */
 public class FileSystem {
     
-     private Globales instance= Globales.getInstance();
+     private static Globales instance= Globales.getInstance();
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws CloneNotSupportedException {
        Directorio raiz = new Directorio("raiz",null);
+       instance.setRoot(raiz);
        FileSys fileSys = new FileSys(raiz,10,500,"raiz");
        Directorio hijo1 = new Directorio("hijo1",raiz);
        Directorio hijo2 = new Directorio("hijo2",hijo1);
@@ -35,6 +38,11 @@ public class FileSystem {
        hijo2.addArchivo(ar1);
        ar1.setRuta(ar1, hijo2);
        System.out.println(ar1.getRuta());
+       String s = "/raiz/hijo1/";
+       
+       // System.out.println(Arrays.toString(s.split("/")));
+       Directorio prueba1 = accederDirectorio("/raiz/hijo1/");
+       System.out.println(prueba1.getNombre());
        //Directorio clone =  new Directorio(raiz);
        //clone.getListaArchivos().remove(0);
        
@@ -54,6 +62,40 @@ public class FileSystem {
         Directorio directorio = new Directorio(nombre, padre);
         return 0;
     }
+    
+    public static Directorio accederDirectorio(String ruta){
+        String[] listaAcceso = ruta.split("/");
+        ArrayList<String>listDef = new ArrayList<>();
+        for(int i = 2; i<listaAcceso.length; i++){
+            listDef.add(listaAcceso[i]);
+            System.out.println(listaAcceso[i]);
+        }
+        
+        Directorio dirTemp = instance.getRoot();
+        for(String i : listDef){
+            System.out.println("1for");
+            dirTemp = searchDirectorio(i,dirTemp);
+            if(dirTemp == null){
+                System.out.println("1if");
+                return null;
+            }
+        }
+        return dirTemp;
+    }
+    
+    public static Directorio searchDirectorio(String nombre, Directorio padre){
+        Directorio dir = null;
+        for(Directorio i : padre.getdHijo()){
+            System.out.println("2for");
+            if(i.getNombre().equals(nombre)){
+                System.out.println("2if");
+                return i;
+            }
+        }
+        return dir;
+    }
+    
+    
     
     public int crearArchivo(String extension, String nombre, String contenido){
         for(Archivo i : instance.getDirectorioActual().getListaArchivos()){
