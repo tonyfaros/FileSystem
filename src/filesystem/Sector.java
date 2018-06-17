@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package filesystem;
 
 /**
@@ -10,5 +6,42 @@ package filesystem;
  * @author Anthony-PC
  */
 public class Sector {
+    
+    int numeroSector;
+    String contenido;
+    int tamTotal;
+    
+
+    public Sector(int numeroSector, String contenido, int tamTotal) {
+        this.numeroSector = numeroSector;
+        this.contenido = contenido;
+        this.tamTotal = tamTotal;
+    }
+
+    public int getNumeroSector() {
+        return numeroSector;
+    }
+
+    public void setNumeroSector(int numeroSector) {
+        this.numeroSector = numeroSector;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public int getTamTotal() {
+        return tamTotal;
+    }
+
+    public void setTamTotal(int tamTotal) {
+        this.tamTotal = tamTotal;
+    }
+    
+    
     
 }

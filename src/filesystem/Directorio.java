@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Anthony-PC
  */
-public class Directorio {
+public class Directorio implements Cloneable{
     
     String nombre;
     ArrayList<Archivo> listaArchivos;
@@ -19,14 +19,27 @@ public class Directorio {
     ArrayList<Directorio> dHijo;
     int numSector;
 
-    public Directorio(String nombre, Directorio dPadre, int numSector) {
+    public Directorio(String nombre, Directorio dPadre/* int numSector*/) {
         this.nombre = nombre;
-        this.listaArchivos = null;
+        this.listaArchivos = new ArrayList<>();
         this.dPadre = dPadre;
-        this.dHijo = null;
-        this.numSector = numSector;
+        this.dHijo = new ArrayList<>();
+        //this.numSector = numSector;
     }
-
+    
+    public Directorio(Directorio directorio){
+        this.nombre = directorio.getNombre();
+        this.listaArchivos = directorio.getListaArchivos();
+        this.dPadre = directorio.getdPadre();
+        this.dHijo = directorio.getdHijo();
+       // this.numSector = directorio.getNumSector();
+    }
+        
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -59,18 +72,21 @@ public class Directorio {
         this.dHijo = dHijo;
     }
     
-    
+    /*
     public int getNumSector() {
         return numSector;
     }
 
     public void setNumSector(int numSector) {
         this.numSector = numSector;
+    }*/
+    
+    
+    public void addDirectorio(Directorio directorio){
+        this.dHijo.add(directorio);
     }
-    
-    
-    public void addArchivo(Archivo archivo){
-        this.listaArchivos.add(archivo);
+    public void addArchivo(Archivo ar){
+        this.listaArchivos.add(ar);
     }
     
 }
