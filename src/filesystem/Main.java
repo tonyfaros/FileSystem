@@ -19,6 +19,8 @@ import javax.swing.tree.DefaultTreeModel;
  * @author mariapizarro
  */
 public class Main extends javax.swing.JFrame {
+    
+    private static Globales instance= Globales.getInstance();
 
     /**
      * Creates new form Main
@@ -60,22 +62,22 @@ public class Main extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextNombreArchivo = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        nombreEdit = new javax.swing.JTextField();
+        extensionEdit = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        contenidoEdit = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        nombreDirEdit = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        rutaActualEdit = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -216,9 +218,9 @@ public class Main extends javax.swing.JFrame {
 
         jLabel6.setText("Nombre:");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        extensionEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                extensionEditActionPerformed(evt);
             }
         });
 
@@ -226,9 +228,9 @@ public class Main extends javax.swing.JFrame {
 
         jLabel8.setText("Contenido:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        contenidoEdit.setColumns(20);
+        contenidoEdit.setRows(5);
+        jScrollPane1.setViewportView(contenidoEdit);
 
         jButton2.setText("Crear");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -256,8 +258,8 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextNombreArchivo)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(nombreEdit)
+                            .addComponent(extensionEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(164, 164, 164)))
                 .addGap(26, 26, 26)
                 .addComponent(jButton2)
@@ -273,14 +275,14 @@ public class Main extends javax.swing.JFrame {
                         .addGap(43, 43, 43)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
-                            .addComponent(jTextNombreArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(nombreEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(extensionEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -312,7 +314,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField6))
+                        .addComponent(nombreDirEdit))
                     .addComponent(jLabel9))
                 .addGap(209, 209, 209))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -328,7 +330,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombreDirEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
                 .addComponent(jButton3)
                 .addContainerGap(297, Short.MAX_VALUE))
@@ -358,7 +360,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField7))
+                        .addComponent(rutaActualEdit))
                     .addComponent(jLabel11))
                 .addGap(209, 209, 209))
             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -374,7 +376,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rutaActualEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addComponent(jButton4)
                 .addContainerGap(294, Short.MAX_VALUE))
@@ -949,23 +951,46 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        String rutaActual = rutaActualEdit.getText().toString();
+        Directorio dirActual = FileSystem.accederDirectorio(rutaActual);
+        if(dirActual != null)
+            instance.setDirectorioActual(dirActual);
+        else{
+            //ERRORRRRRRRRRRRRRRRRRRRR
+        }
+               
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        String nombreDir = nombreDirEdit.getText().toString();
+        int crearDir = FileSystem.crearDirectorio(nombreDir);
+        if(crearDir == -1){
+            //ERROOOOOOOOORRRRRRRR
+        }
+        else{
+            
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String nombre = nombreEdit.getText().toString();
+        String extension = extensionEdit.getText().toString();
+        String contenido = contenidoEdit.getText().toString();
+        int crear = FileSystem.crearArchivo(extension, nombre, contenido, false);
+        if(crear == -1){
+            //errooooooooooooorrrrrrrrrr
+        }else{
+            root.add(new DefaultMutableTreeNode(nombreEdit.getText(),true));
+            model.reload(root);
+        }
         
-        
-        root.add(new DefaultMutableTreeNode(jTextNombreArchivo.getText(),true));
-        model.reload(root);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void extensionEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extensionEditActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_extensionEditActionPerformed
 
     private void jTextTamSectoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextTamSectoresActionPerformed
         // TODO add your handling code here:
@@ -988,9 +1013,9 @@ public class Main extends javax.swing.JFrame {
         //root.add(new DefaultMutableTreeNode("another_child"));
         
         model.reload(root);
-        //Directorio raiz = new Directorio(jTextRoot.getText(),null);
+        Directorio raiz = new Directorio(jTextRoot.getText(),null);
         
-        //FileSys filesys = new FileSys(raiz,Integer.parseInt(jTextCantSectores.getText()),Integer.parseInt(jTextTamSectores.getText()),jTextRoot.getText());
+        FileSys filesys = new FileSys(raiz,Integer.parseInt(jTextCantSectores.getText().toString()),Integer.parseInt(jTextTamSectores.getText().toString()),jTextRoot.getText().toString());
         
         /*
         //create the root node
@@ -1049,6 +1074,8 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextArea contenidoEdit;
+    private javax.swing.JTextField extensionEdit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -1122,20 +1149,18 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextField jTextCantSectores;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
-    private javax.swing.JTextField jTextNombreArchivo;
     private javax.swing.JTextField jTextRoot;
     private javax.swing.JTextField jTextTamSectores;
     private javax.swing.JTree jTree;
+    private javax.swing.JTextField nombreDirEdit;
+    private javax.swing.JTextField nombreEdit;
+    private javax.swing.JTextField rutaActualEdit;
     // End of variables declaration//GEN-END:variables
 }
