@@ -1,6 +1,9 @@
 
 package filesystem;
 
+import javax.swing.JFrame;
+import javax.swing.tree.DefaultMutableTreeNode;
+
 /**
  *
  * @author Anthony-PC
@@ -37,5 +40,8 @@ public class Globales {
     public void setRoot(Directorio root){
         Globales.root = root;
     }
+    
+    DefaultMutableTreeNode actual;
+    JFrame frame = new JFrame();
     
 }
