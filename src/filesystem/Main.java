@@ -923,8 +923,6 @@ public class Main extends javax.swing.JFrame {
 
         jLabel25.setText("Directorio:");
 
-        rutaDestinoEdit.setEditable(false);
-
         jButton7.setText("Mover");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
