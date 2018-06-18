@@ -938,11 +938,15 @@ public class Main extends javax.swing.JFrame {
                 "Nombre", "Tipo"
             }
         ));
+        jTableMover.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMoverMouseClicked(evt);
+            }
+        });
         jScrollPane9.setViewportView(jTableMover);
 
         jLabel24.setText("Nombre:");
 
-        jTextField8.setEditable(false);
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField8ActionPerformed(evt);
@@ -1419,10 +1423,14 @@ public class Main extends javax.swing.JFrame {
         String[] nombreExt = nombre.split("\\.");
          System.out.println(Arrays.toString(nombreExt));
         instance.setRuta();
-        FileSystem.leer(instance.getRoot(), nombreExt[0],"", "."+nombreExt[1]);
+        FileSystem.leer(instance.getRoot(), nombreExt[0],"/"+instance.getRoot().getNombre()+"/", "."+nombreExt[1]);
         rutasTotales.setText(instance.getRuta());
         
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jTableMoverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMoverMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTableMoverMouseClicked
 
     /**
      * @param args the command line arguments

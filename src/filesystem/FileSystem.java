@@ -89,7 +89,7 @@ public class FileSystem {
        //clone.getListaArchivos().remove(0);
        
        
-       //leer(raiz,"archivo1","/root/",".txt");
+       leer(raiz,"archivo2","/root/",".txt");
        
     }
     
@@ -168,7 +168,7 @@ public class FileSystem {
         if(!raiz.getListaArchivos().isEmpty()){
             Archivo archivo1 = searchFile(raiz.getListaArchivos(),nombre,extension);
             if(archivo1 != null){
-                
+                System.out.println();
                 instance.addRuta(ruta);
                 System.out.println("Ruta: "+ruta);
             }
@@ -176,7 +176,8 @@ public class FileSystem {
         
         if(!raiz.getdHijo().isEmpty()){
             for(Directorio i : raiz.getdHijo()){
-                return leer(i,nombre,ruta+i.getNombre()+"/",extension);
+                System.out.println("leer"+i.getNombre());
+                leer(i,nombre,ruta+i.getNombre()+"/",extension);
              
             }
         }
