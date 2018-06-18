@@ -33,21 +33,56 @@ public class FileSystem {
        Directorio raiz = new Directorio("raiz",null);
        instance.setRoot(raiz);
        FileSys fileSys = new FileSys(raiz,10,500,"raiz");
+       
        Directorio hijo1 = new Directorio("hijo1",raiz);
-       Directorio hijo2 = new Directorio("hijo2",hijo1);
+       Directorio hijo2 = new Directorio("hijo2",raiz);
+       Directorio hijo3 = new Directorio("hijo3",hijo2);
+       Directorio hijo4 = new Directorio("hijo4",hijo2);
+       Directorio hijo5 = new Directorio("hijo4",hijo2);
+       Directorio hijo6 = new Directorio("hijo4",hijo2);
+       
        raiz.addDirectorio(hijo1);
-       hijo1.addDirectorio(hijo2);
-       Archivo ar1 = new Archivo(".txt","archivo1","01-01-01","01-01-01","asdf",2,hijo2,false);
-       raiz.addArchivo(ar1);
+       raiz.addDirectorio(hijo2);
+       hijo2.addDirectorio(hijo3);
+       
+       
+       Archivo ar1 = new Archivo(".txt","archivo1","01-01-01","01-01-01","asdf",2,hijo1,false);
+       Archivo ar2 = new Archivo(".txt","archivo2","01-01-01","01-01-01","asdf",2,hijo2,false);
+       Archivo ar3 = new Archivo(".txt","archivo3","01-01-01","01-01-01","asdf",2,hijo3,false);
+       Archivo ar4 = new Archivo(".txt","archivo4","01-01-01","01-01-01","asdf",2,hijo4,false);
+       Archivo ar5 = new Archivo(".txt","archivo5","01-01-01","01-01-01","asdf",2,hijo2,false);
+       
+       
        hijo1.addArchivo(ar1);
-       hijo2.addArchivo(ar1);
-       ar1.setRuta(ar1, hijo2);
+       hijo2.addArchivo(ar2);
+       hijo3.addArchivo(ar3);
+       
+       
+       ar1.setRuta(ar1, hijo1);
+       ar2.setRuta(ar2, hijo2);
+       ar3.setRuta(ar3, hijo3);
+       
        System.out.println(ar1.getRuta());
-       String s = "/raiz/hijo1/";
+       System.out.println(ar2.getRuta());
+       System.out.println(ar3.getRuta());
+        
+       //copiarVirtualVirtualDir("/raiz/hijo2/hijo3/","/raiz/hijo1/");
+       
+       //Directorio r = accederDirectorio("/raiz/hijo1/hijo3/");
+       
+       /*for(Archivo i : r.getListaArchivos()){
+           System.out.println(i.getNombre());
+           System.out.println(i.getRuta());
+       }*/
+       
+       
+      // System.out.println(hijo1.getListaArchivos().size());
+       //copiarVirtualVirtualAr("/raiz/hijo1/hijo2","/raiz/hijo1/",ar1.getNombre(),ar1.getExtension());
+       
        
        // System.out.println(Arrays.toString(s.split("/")));
-       Directorio prueba1 = accederDirectorio("/raiz/hijo1/");
-       System.out.println(prueba1.getNombre());
+       //Directorio prueba1 = accederDirectorio("/raiz/hijo1/");
+       //System.out.println(prueba1.getNombre());
        //Directorio clone =  new Directorio(raiz);
        //clone.getListaArchivos().remove(0);
        
@@ -75,15 +110,16 @@ public class FileSystem {
         ArrayList<String>listDef = new ArrayList<>();
         for(int i = 2; i<listaAcceso.length; i++){
             listDef.add(listaAcceso[i]);
-            System.out.println(listaAcceso[i]);
+            //System.out.println("--:" + listaAcceso[i]);
+                   
         }
         
         Directorio dirTemp = instance.getRoot();
         for(String i : listDef){
-          //  System.out.println("1for");
+            //System.out.println("1for:--" + i);
             dirTemp = searchDirectorio(i,dirTemp);
             if(dirTemp == null){
-               // System.out.println("1if");
+                //System.out.println("1if");
                 return null;
             }
         }
@@ -94,7 +130,7 @@ public class FileSystem {
     public static Directorio searchDirectorio(String nombre, Directorio padre){
         Directorio dir = null;
         for(Directorio i : padre.getdHijo()){
-            //System.out.println("2for");
+            //System.out.println("2for" + i.getNombre());
             if(i.getNombre().equals(nombre)){
                 //System.out.println("2if");
                 return i;
@@ -167,21 +203,43 @@ public class FileSystem {
         
         Archivo archivoOr = searchFile(dirOr.getListaArchivos(),nombreArchivo, extension);
         Archivo archivoCopia = new Archivo(archivoOr);
+        dirDes.addArchivo(archivoCopia);
         archivoCopia.setdPadre(dirDes);
         archivoCopia.setRuta(archivoCopia, dirDes);
         
     }
     
     //Copiar virtual virtual directorio
-    public static void  copiarVirtualVirtualDir(String ruta, String rutaDestino, String nombreDir){
+    //Recibe la ruta del directorio que quiere copiar
+    public static void  copiarVirtualVirtualDir(String ruta, String rutaDestino){
         Directorio dirOr = accederDirectorio(ruta);
         Directorio dirDes = accederDirectorio(rutaDestino);
-        
         Directorio copia = new Directorio(dirOr);
         
+        copia.setdPadre(dirDes);
         
-      
+        /*for(Archivo i: copia.getListaArchivos()){
+            i.setRuta(i, dirDes);
+        }*/
+        copia = actualizarRutaAux(copia);
+        dirDes.addDirectorio(copia);
+         
+    }
+    
+    public static Directorio actualizarRutaAux(Directorio directorio){
         
+        
+        for(Archivo i: directorio.getListaArchivos()){
+            i.setRuta(i, directorio);
+        }
+        
+        if(!directorio.getdHijo().isEmpty()){
+            for(Directorio j : directorio.getdHijo()){
+                j = actualizarRutaAux(j);
+                
+            }
+        }
+        return directorio;
     }
     
     

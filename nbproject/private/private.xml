@@ -5,9 +5,11 @@
         <group>
             <file>file:/C:/Users/Anthony-PC/Documents/NetBeansProjects/FileSystem/src/filesystem/Directorio.java</file>
             <file>file:/C:/Users/Anthony-PC/Documents/NetBeansProjects/FileSystem/src/filesystem/Archivo.java</file>
+            <file>file:/C:/Users/Anthony-PC/Documents/NetBeansProjects/FileSystem/src/filesystem/Globales.java</file>
             <file>file:/C:/Users/Anthony-PC/Documents/NetBeansProjects/FileSystem/src/filesystem/FileSystem.java</file>
             <file>file:/C:/Users/Anthony-PC/Documents/NetBeansProjects/FileSystem/src/filesystem/FileSys.java</file>
             <file>file:/C:/Users/Anthony-PC/Documents/NetBeansProjects/FileSystem/src/filesystem/Sector.java</file>
+            <file>file:/C:/Users/Anthony-PC/Documents/NetBeansProjects/FileSystem/src/filesystem/Main.java</file>
         </group>
     </open-files>
 </project-private>

@@ -17,6 +17,7 @@ public class Directorio implements Cloneable{
     ArrayList<Archivo> listaArchivos;
     Directorio dPadre;
     ArrayList<Directorio> dHijo;
+    String ruta;
     int numSector;
 
     public Directorio(String nombre, Directorio dPadre/* int numSector*/) {
@@ -30,7 +31,7 @@ public class Directorio implements Cloneable{
     public Directorio(Directorio directorio){
         this.nombre = directorio.getNombre();
         this.listaArchivos = directorio.getListaArchivos();
-        this.dPadre = directorio.getdPadre();
+        //this.dPadre = directorio.getdPadre();
         this.dHijo = directorio.getdHijo();
        // this.numSector = directorio.getNumSector();
     }
