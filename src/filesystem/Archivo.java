@@ -6,6 +6,9 @@ package filesystem;
  * @author Anthony-PC
  */
 public class Archivo {
+    
+    
+    private static Globales instance= Globales.getInstance();
     //int tamano;
     String extension;
     String nombre;
@@ -111,7 +114,7 @@ public class Archivo {
     public void setRuta(Archivo archivo, Directorio dirActual){
         String ruta = archivo.getNombre()+archivo.getExtension();
         System.out.println(dirActual.getNombre());
-        while(!dirActual.getNombre().equals("raiz")){
+        while(!dirActual.getNombre().equals(instance.getRoot().getNombre())){
              ruta = dirActual.getNombre() + "/"+ ruta;
              dirActual = dirActual.dPadre;
         }

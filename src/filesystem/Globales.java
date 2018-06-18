@@ -15,6 +15,8 @@ public class Globales {
     private static Directorio directorioActual;
     
     private static Directorio root;
+    
+    
 
     public static Globales getInstance(){
         if(instance == null){

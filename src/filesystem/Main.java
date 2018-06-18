@@ -230,6 +230,10 @@ public class Main extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
+        nombreArchivoEdit = new javax.swing.JTextField();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButton10 = new javax.swing.JButton();
         jScrollPane11 = new javax.swing.JScrollPane();
         jTree = new javax.swing.JTree();
 
@@ -1035,23 +1039,50 @@ public class Main extends javax.swing.JFrame {
         jTabbedPane1.addTab("REM", jPanel11);
 
         jLabel23.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel23.setText("Modificar contenido");
+        jLabel23.setText("Buscar");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane12.setViewportView(jTextArea1);
+
+        jButton10.setText("Buscar");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
-                .addGap(240, 240, 240)
-                .addComponent(jLabel23)
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(240, 240, 240)
+                        .addComponent(jLabel23))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(nombreArchivoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel13Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jLabel23)
-                .addContainerGap(442, Short.MAX_VALUE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombreArchivoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton10))
+                .addGap(48, 48, 48)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("FIND", jPanel13);
@@ -1339,8 +1370,38 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        int row = jTablaEliminar.getSelectedRow();
+        int column = jTablaEliminar.getSelectedColumn();
+       
+        String nombre = jTablaEliminar.getValueAt(row, column).toString();
+        //System.out.println(column);
         
+        if(column < jTablaEliminar.getColumnCount()-1){
+            String tipo = jTablaEliminar.getValueAt(row, column+2).toString();
+            String[] nombreExt = nombre.split("\\.");
+            System.out.println(Arrays.toString(nombreExt));
+            if(tipo.equals("archivo")){
+                String extension = jTablaEliminar.getValueAt(row, column+1).toString();
+                instance.getDirectorioActual().getListaArchivos().remove(FileSystem.searchFile(instance.getDirectorioActual().getListaArchivos(), nombre, extension));
+               
+            }else{
+                instance.getDirectorioActual().getdHijo().remove(FileSystem.searchDirectorio(nombre, instance.getDirectorioActual()));
+                
+            }
+        
+        }else{
+            System.out.println("fuck");
+        }
+        
+        actualizaDatos();
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        String nombre = nombreArchivoEdit.getText().toString();
+        String[] nombreExt = nombre.split("\\.");
+        
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1383,6 +1444,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField destinoEdit;
     private javax.swing.JTextField extensionEdit;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1441,6 +1503,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1457,6 +1520,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable jTableModContenido;
     private javax.swing.JTable jTableMover;
     private javax.swing.JTable jTablePropiedades;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextCantSectores;
     private javax.swing.JTextArea jTextContenidoCons;
     private javax.swing.JTextField jTextField10;
@@ -1465,6 +1529,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTextRoot;
     private javax.swing.JTextField jTextTamSectores;
     private javax.swing.JTree jTree;
+    private javax.swing.JTextField nombreArchivoEdit;
     private javax.swing.JTextField nombreEdit;
     private javax.swing.JTextField rutaActualEdit;
     private javax.swing.JTextField rutaDestinoEdit;
