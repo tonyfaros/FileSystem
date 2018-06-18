@@ -1271,7 +1271,7 @@ public class Main extends javax.swing.JFrame {
             model.reload(root);;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-    public
+    
     private void extensionEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extensionEditActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_extensionEditActionPerformed
