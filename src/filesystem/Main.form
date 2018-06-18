@@ -350,7 +350,11 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
+<<<<<<< HEAD
+                              <Component id="jTextNombreDirectorio" max="32767" attributes="0"/>
+=======
                               <Component id="nombreDirEdit" max="32767" attributes="0"/>
+>>>>>>> b3c1e8ae04ed52bee95cc9f951e777ccde5bbd6d
                           </Group>
                           <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -371,7 +375,11 @@
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
+                          <Component id="jTextNombreDirectorio" alignment="0" min="-2" max="-2" attributes="0"/>
+=======
                           <Component id="nombreDirEdit" alignment="0" min="-2" max="-2" attributes="0"/>
+>>>>>>> b3c1e8ae04ed52bee95cc9f951e777ccde5bbd6d
                       </Group>
                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="jButton3" min="-2" max="-2" attributes="0"/>
@@ -394,7 +402,11 @@
                 <Property name="text" type="java.lang.String" value="Nombre:"/>
               </Properties>
             </Component>
+<<<<<<< HEAD
+            <Component class="javax.swing.JTextField" name="jTextNombreDirectorio">
+=======
             <Component class="javax.swing.JTextField" name="nombreDirEdit">
+>>>>>>> b3c1e8ae04ed52bee95cc9f951e777ccde5bbd6d
             </Component>
             <Component class="javax.swing.JButton" name="jButton3">
               <Properties>

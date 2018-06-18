@@ -6,6 +6,7 @@
 package filesystem;
 
 import static java.lang.Thread.sleep;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 /**
  *
@@ -33,6 +35,19 @@ public class Main extends javax.swing.JFrame {
         model = (DefaultTreeModel)jTree.getModel();
         
     }
+    
+    private TreePath find(DefaultMutableTreeNode root, String s) {
+    @SuppressWarnings("unchecked")
+    Enumeration<DefaultMutableTreeNode> e = root.depthFirstEnumeration();
+    while (e.hasMoreElements()) {
+        DefaultMutableTreeNode node = e.nextElement();
+        if (node.toString().equalsIgnoreCase(s)) {
+            TreePath tree =  new TreePath(node.getPath());
+            return tree;
+        }
+    }
+    return null;
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,6 +87,7 @@ public class Main extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jTextNombreDirectorio = new javax.swing.JTextField();
         nombreDirEdit = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -321,7 +337,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(nombreDirEdit))
+                        .addComponent(jTextNombreDirectorio))
                     .addComponent(jLabel9))
                 .addGap(209, 209, 209))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -337,7 +353,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(nombreDirEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextNombreDirectorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
                 .addComponent(jButton3)
                 .addContainerGap(297, Short.MAX_VALUE))
@@ -988,7 +1004,19 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        String nombreDir = nombreDirEdit.getText().toString();
+        System.out.println(root.getChildAt(0));
+        DefaultMutableTreeNode Node = new DefaultMutableTreeNode(jTextNombreDirectorio.getText());
+        Node.add(new DefaultMutableTreeNode("."));
+        root.add(Node);
+        model.reload(root);
+        
+        TreePath tree;
+        tree = find(root,"abc");
+        System.out.println(tree.toString());
+        DefaultMutableTreeNode aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
+        Node.add(new DefaultMutableTreeNode("."));
+        
+        String nombreDir = jTextNombreDirectorio.getText().toString();
         int crearDir = FileSystem.crearDirectorio(nombreDir);
         if(crearDir == -1){
             //ERROOOOOOOOORRRRRRRR
@@ -1025,8 +1053,8 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         //create the root node
         
-        
         root = (DefaultMutableTreeNode)model.getRoot();
+        root.removeAllChildren(); 
         root.setUserObject(jTextRoot.getText());
         root.setAllowsChildren(true);
         model.nodeChanged(root);
@@ -1035,7 +1063,7 @@ public class Main extends javax.swing.JFrame {
         } catch (InterruptedException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //root.add(new DefaultMutableTreeNode("another_child"));
+        root.add(new DefaultMutableTreeNode("."));
         
         model.reload(root);
         Directorio raiz = new Directorio(jTextRoot.getText(),null);
@@ -1196,8 +1224,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTextCantSectores;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextNombreArchivo;
+    private javax.swing.JTextField jTextNombreDirectorio;
     private javax.swing.JTextField jTextRoot;
     private javax.swing.JTextField jTextTamSectores;
     private javax.swing.JTree jTree;
