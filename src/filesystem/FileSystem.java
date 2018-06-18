@@ -30,6 +30,7 @@ public class FileSystem {
        Main main = new Main();
        main.setVisible(true);
        //Controlador c = new Controlador();
+
        //c.crearArchivo("bla", "bla", "bla");
        Directorio raiz = new Directorio("raiz",null);
        instance.setRoot(raiz);

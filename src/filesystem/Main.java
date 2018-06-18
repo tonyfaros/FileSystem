@@ -9,7 +9,9 @@ import static java.lang.Thread.sleep;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
@@ -202,9 +204,9 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jTextTamSectores)
                             .addComponent(jTextCantSectores, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel1))
-                .addGap(98, 98, 98)
+                .addGap(54, 54, 54)
                 .addComponent(jButton1)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -985,37 +987,50 @@ public class Main extends javax.swing.JFrame {
         
         
         String rutaActual = rutaActualEdit.getText().toString();
+        System.out.println(rutaActual);
         Directorio dirActual = FileSystem.accederDirectorio(rutaActual);
         if(dirActual != null)
             instance.setDirectorioActual(dirActual);
         else{
-            //ERRORRRRRRRRRRRRRRRRRRRR
+            JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame,"El directorio seleccionado no existe","Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        DefaultMutableTreeNode aux;
+        TreePath tree;
+        tree = find(root,instance.getDirectorioActual().getNombre());
+        if(tree.getPathCount()-1 != 0){
+            aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
+        }
+        else
+            aux = root;
         
-        System.out.println(root.getChildAt(0));
+        
         DefaultMutableTreeNode Node = new DefaultMutableTreeNode(jTextNombreDirectorio.getText());
         Node.add(new DefaultMutableTreeNode("."));
-        root.add(Node);
+        aux.add(Node);
         model.reload(root);
         
-        TreePath tree;
-        tree = find(root,"abc");
+        //TreePath tree;
+        //tree = find(root,instance.getDirectorioActual().getNombre());
         System.out.println(tree.toString());
-        DefaultMutableTreeNode aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
-        Node.add(new DefaultMutableTreeNode("."));
+        //DefaultMutableTreeNode aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
+        Node.add(new DefaultMutableTreeNode(".a"));
         
         String nombreDir = jTextNombreDirectorio.getText().toString();
         int crearDir = FileSystem.crearDirectorio(nombreDir);
         if(crearDir == -1){
             //ERROOOOOOOOORRRRRRRR
+           JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame,"Error al crear el directorio","Error",JOptionPane.ERROR_MESSAGE);
         }
         else{
-            
+            System.out.println("exit");
         }
+        
         
         
       
@@ -1054,36 +1069,18 @@ public class Main extends javax.swing.JFrame {
         root.setUserObject(jTextRoot.getText());
         root.setAllowsChildren(true);
         model.nodeChanged(root);
-        try {
-            sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         root.add(new DefaultMutableTreeNode("."));
         
         model.reload(root);
         Directorio raiz = new Directorio(jTextRoot.getText(),null);
         
         FileSys filesys = new FileSys(raiz,Integer.parseInt(jTextCantSectores.getText()),Integer.parseInt(jTextTamSectores.getText()),jTextRoot.getText());
-        
-        /*
-        //create the root node
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
-        //create the child nodes
-        DefaultMutableTreeNode vegetableNode = new DefaultMutableTreeNode("Vegetables");
-        DefaultMutableTreeNode fruitNode = new DefaultMutableTreeNode("Fruits");
-        //add the child nodes to the root node
-        root.add(vegetableNode);
-        root.add(fruitNode);
-         
-        //create the tree by passing in the root node
-        tree = jTree;
-        add(tree);
-         
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-               
-        this.pack();
-        this.setVisible(true);*/
+        instance.setRoot(raiz);
+        instance.setDirectorioActual(raiz);
+        //if(FileSystem. != null){
+            //System.out.println(instance.get);
+        //}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
