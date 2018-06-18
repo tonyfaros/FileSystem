@@ -32,7 +32,7 @@ public class FileSystem {
        //Controlador c = new Controlador();
 
        //c.crearArchivo("bla", "bla", "bla");
-       /*Directorio raiz = new Directorio("raiz",null);
+       Directorio raiz = new Directorio("raiz",null);
        instance.setRoot(raiz);
        FileSys fileSys = new FileSys(raiz,10,500,"raiz");
        

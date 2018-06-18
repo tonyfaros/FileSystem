@@ -1432,10 +1432,9 @@ public class Main extends javax.swing.JFrame {
         
         if(column < jTablaEliminar.getColumnCount()-1){
             String tipo = jTablaEliminar.getValueAt(row, column+2).toString();
-            String[] nombreExt = nombre.split("\\.");
-            System.out.println(Arrays.toString(nombreExt));
             if(tipo.equals("archivo")){
                 String extension = jTablaEliminar.getValueAt(row, column+1).toString();
+                //System.out.println("nom"+ nombre);
                 instance.getDirectorioActual().getListaArchivos().remove(FileSystem.searchFile(instance.getDirectorioActual().getListaArchivos(), nombre, extension));
                
             }else{
