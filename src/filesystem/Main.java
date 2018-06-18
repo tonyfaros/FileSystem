@@ -35,7 +35,8 @@ public class Main extends javax.swing.JFrame {
      */
     DefaultTreeModel model;
     DefaultMutableTreeNode root;
-    DefaultMutableTreeNode actual;
+    
+    
     JFrame frame = new JFrame();
     
     private static Globales instance= Globales.getInstance();
@@ -58,6 +59,34 @@ public class Main extends javax.swing.JFrame {
     }
     return null;
 }
+    public DefaultMutableTreeNode reloadTree(Directorio directorio, DefaultMutableTreeNode actual){
+        //DefaultMutableTreeNode actual = null;
+        //System.out.println(root.getChildCount());
+        
+        //DefaultMutableTreeNode ArchivoNode:
+        if(!directorio.getListaArchivos().isEmpty())
+            for(Archivo i : directorio.getListaArchivos()){
+                
+                actual.add(new DefaultMutableTreeNode(i.getNombre()));
+                
+            }
+        if(!directorio.getdHijo().isEmpty()){
+            for(Directorio i : directorio.getdHijo()){
+                DefaultMutableTreeNode aux;
+                aux = new DefaultMutableTreeNode(i.getNombre());
+                System.out.println(i.getNombre());
+                //aux.add();
+                
+                actual.add(reloadTree(i,aux));
+            }
+        }
+        if(directorio.getListaArchivos().isEmpty() && directorio.getdHijo().isEmpty()){
+            actual.add(new DefaultMutableTreeNode("."));
+            System.out.println("hola");
+        }
+        //model.reload(actual);
+        return actual;
+        
     
     private void actualizaDatos(){
         String rutaActual = rutaActualEdit.getText().toString();
@@ -1157,9 +1186,10 @@ public class Main extends javax.swing.JFrame {
         String rutaActual = rutaActualEdit.getText().toString();
         System.out.println(rutaActual);
         Directorio dirActual = FileSystem.accederDirectorio(rutaActual);
-        if(dirActual != null)
+        if(dirActual != null){
             instance.setDirectorioActual(dirActual);
-        else{
+            JOptionPane.showMessageDialog(frame,"Ruta actualizada");
+        }else{
             JFrame frame = new JFrame();
             JOptionPane.showMessageDialog(frame,"El directorio seleccionado no existe","Error",JOptionPane.ERROR_MESSAGE);
         }
@@ -1168,10 +1198,15 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        /*
         DefaultMutableTreeNode aux;
         TreePath tree;
+        TreePath treeaux;
+        
         tree = find(root,instance.getDirectorioActual().getNombre());
+        System.out.println("esto:" + tree.getPathComponent(0).toString());
         if(tree.getPathCount()-1 != 0){
+            for(int i = 0; i<)
             aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
             
         }
@@ -1182,13 +1217,14 @@ public class Main extends javax.swing.JFrame {
         DefaultMutableTreeNode Node = new DefaultMutableTreeNode(jTextNombreDirectorio.getText());
         Node.add(new DefaultMutableTreeNode("."));
         aux.add(Node);
-        model.reload(root);
+        model.reload(aux);
+        */
         
         //TreePath tree;
         //tree = find(root,instance.getDirectorioActual().getNombre());
-        System.out.println(tree.toString());
+        //System.out.println(tree.toString());
         //DefaultMutableTreeNode aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
-        Node.add(new DefaultMutableTreeNode(".a"));
+        //Node.add(new DefaultMutableTreeNode(".a"));
         
         String nombreDir = jTextNombreDirectorio.getText().toString();
         int crearDir = FileSystem.crearDirectorio(nombreDir);
@@ -1198,7 +1234,10 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(frame,"Error al crear el directorio","Error",JOptionPane.ERROR_MESSAGE);
         }
         else{
-            JOptionPane.showMessageDialog(frame,"Ruta actualizada");
+            root.removeAllChildren();
+            root = reloadTree(instance.getRoot(),root);
+            //System.out.println(root.getChildCount());
+            model.reload(root);
             System.out.println("exit");
         }
       
@@ -1212,14 +1251,27 @@ public class Main extends javax.swing.JFrame {
        String extension = extensionEdit.getText().toString();
        String contenido = contenidoEdit.getText().toString();
         int crear = FileSystem.crearArchivo(extension, nombre, contenido, false);
+        /*
+        DefaultMutableTreeNode aux;
+        TreePath tree;
+        tree = find(root,instance.getDirectorioActual().getNombre());
+        if(tree.getPathCount()-1 != 0){
+            aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
+            
+        }
+        else
+            aux = root;*/
+        
         if(crear == -1){
             //errooooooooooooorrrrrrrrrr
         }else{
-            root.add(new DefaultMutableTreeNode(nombreEdit.getText(),true));
-            model.reload(root);
+            root.removeAllChildren();
+            root = reloadTree(instance.getRoot(),root);
+            //System.out.println(root.getChildCount());
+            model.reload(root);;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    public
     private void extensionEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_extensionEditActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_extensionEditActionPerformed
@@ -1241,6 +1293,7 @@ public class Main extends javax.swing.JFrame {
         root.add(new DefaultMutableTreeNode("."));
         
         model.reload(root);
+        //actual = root;
         Directorio raiz = new Directorio(jTextRoot.getText(),null);
         
         FileSys filesys = new FileSys(raiz,Integer.parseInt(jTextCantSectores.getText()),Integer.parseInt(jTextTamSectores.getText()),jTextRoot.getText());
