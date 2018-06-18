@@ -29,8 +29,8 @@ public class FileSystem {
         
        Main main = new Main();
        main.setVisible(true);
-       Controlador c = new Controlador();
-       c.crearArchivo("bla", "bla", "bla");
+       //Controlador c = new Controlador();
+       //c.crearArchivo("bla", "bla", "bla");
        Directorio raiz = new Directorio("raiz",null);
        instance.setRoot(raiz);
        FileSys fileSys = new FileSys(raiz,10,500,"raiz");
@@ -102,6 +102,7 @@ public class FileSystem {
         }
        
         Directorio directorio = new Directorio(nombre, instance.getDirectorioActual());
+        instance.getDirectorioActual().addDirectorio(directorio);
         return 0;
     }
     
