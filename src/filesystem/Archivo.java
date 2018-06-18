@@ -110,9 +110,10 @@ public class Archivo {
     
     public void setRuta(Archivo archivo, Directorio dirActual){
         String ruta = archivo.getNombre()+archivo.getExtension();
-        while(dirActual.getNombre() != "raiz"){
+        System.out.println(dirActual.getNombre());
+        while(!dirActual.getNombre().equals("raiz")){
              ruta = dirActual.getNombre() + "/"+ ruta;
-            dirActual = dirActual.dPadre;
+             dirActual = dirActual.dPadre;
         }
         ruta = "/raiz/" + ruta;
         archivo.setDefRuta(ruta);
@@ -131,6 +132,10 @@ public class Archivo {
 
     public void setReal(boolean real) {
         this.real = real;
+    }
+    
+    public int getTamano(){
+        return this.contenido.length() * 2;
     }
     
     
