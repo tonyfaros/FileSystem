@@ -15,9 +15,10 @@ public class Archivo {
     int numSector;
     Directorio dPadre;
     String ruta;
+    boolean real;
 
     public Archivo(/*int tamano,*/ String extension, String nombre, String fechaCreacion, String fechaMod, String contenido, 
-            int numSector, Directorio dPadre) {
+            int numSector, Directorio dPadre,boolean real) {
        // this.tamano = tamano;
         this.extension = extension;
         this.nombre = nombre;
@@ -27,6 +28,20 @@ public class Archivo {
         this.numSector = numSector;
         this.dPadre = dPadre;
         this.ruta = "";
+        this.real = real;
+        
+    }
+    
+    public Archivo(Archivo archivo){
+        this.extension = archivo.extension;
+        this.nombre = archivo.nombre;
+        this.fechaCreacion = archivo.fechaCreacion;
+        this.fechaMod = archivo.fechaMod;
+        this.contenido = archivo.contenido;
+        this.numSector = archivo.numSector;
+        //this.dPadre = null;
+        this.ruta = "";
+        this.real = archivo.real;;
     }
 
     public Directorio getdPadre() {
@@ -109,5 +124,15 @@ public class Archivo {
     public String getRuta(){
         return ruta;
     }
+
+    public boolean isReal() {
+        return real;
+    }
+
+    public void setReal(boolean real) {
+        this.real = real;
+    }
+    
+    
    
 }
