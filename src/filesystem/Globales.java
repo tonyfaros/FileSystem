@@ -41,7 +41,6 @@ public class Globales {
         Globales.root = root;
     }
     
-    DefaultMutableTreeNode actual;
-    JFrame frame = new JFrame();
+    
     
 }

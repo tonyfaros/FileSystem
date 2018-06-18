@@ -30,6 +30,9 @@ public class Main extends javax.swing.JFrame {
      */
     DefaultTreeModel model;
     DefaultMutableTreeNode root;
+    DefaultMutableTreeNode actual;
+    
+    JFrame frame = new JFrame();
     
     private static Globales instance= Globales.getInstance();
     public Main() {
