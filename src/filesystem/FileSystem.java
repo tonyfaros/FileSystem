@@ -155,7 +155,9 @@ public class FileSystem {
         String fecha  = dateFormat.format(date).toString();
         
         Archivo archivo = new Archivo(extension, nombre, fecha, fecha,contenido,0,instance.getDirectorioActual(),real);
-        
+        instance.getDirectorioActual().addArchivo(archivo);
+        System.out.println(instance.getDirectorioActual().getNombre());
+        archivo.setRuta(archivo, instance.getDirectorioActual());
         
         //System.out.println(dateFormat.format(date));
         return 0;

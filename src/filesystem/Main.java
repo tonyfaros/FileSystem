@@ -997,6 +997,11 @@ public class Main extends javax.swing.JFrame {
         jScrollPane8.setViewportView(jTablaEliminar);
 
         jButton6.setText("Eliminar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -1173,8 +1178,8 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         
        String nombre = nombreEdit.getText().toString();
-        String extension = extensionEdit.getText().toString();
-        String contenido = contenidoEdit.getText().toString();
+       String extension = extensionEdit.getText().toString();
+       String contenido = contenidoEdit.getText().toString();
         int crear = FileSystem.crearArchivo(extension, nombre, contenido, false);
         if(crear == -1){
             //errooooooooooooorrrrrrrrrr
@@ -1331,6 +1336,11 @@ public class Main extends javax.swing.JFrame {
             System.out.println("fuck");
         }
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
