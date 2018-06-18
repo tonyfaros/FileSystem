@@ -27,8 +27,8 @@ public class FileSystem {
     public static void main(String[] args) throws CloneNotSupportedException {
         
         
-       //Main main = new Main();
-      // main.setVisible(true);
+       Main main = new Main();
+        main.setVisible(true);
        Controlador c = new Controlador();
        c.crearArchivo("bla", "bla", "bla");
        Directorio raiz = new Directorio("raiz",null);

@@ -200,9 +200,9 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jTextTamSectores)
                             .addComponent(jTextCantSectores, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel1))
-                .addGap(98, 98, 98)
+                .addGap(54, 54, 54)
                 .addComponent(jButton1)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1038,36 +1038,16 @@ public class Main extends javax.swing.JFrame {
         root.setUserObject(jTextRoot.getText());
         root.setAllowsChildren(true);
         model.nodeChanged(root);
-        try {
-            sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         root.add(new DefaultMutableTreeNode("."));
         
         model.reload(root);
         Directorio raiz = new Directorio(jTextRoot.getText(),null);
         
         FileSys filesys = new FileSys(raiz,Integer.parseInt(jTextCantSectores.getText()),Integer.parseInt(jTextTamSectores.getText()),jTextRoot.getText());
+        instance.setRoot(raiz);
+        instance.setDirectorioActual(raiz);
         
-        /*
-        //create the root node
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
-        //create the child nodes
-        DefaultMutableTreeNode vegetableNode = new DefaultMutableTreeNode("Vegetables");
-        DefaultMutableTreeNode fruitNode = new DefaultMutableTreeNode("Fruits");
-        //add the child nodes to the root node
-        root.add(vegetableNode);
-        root.add(fruitNode);
-         
-        //create the tree by passing in the root node
-        tree = jTree;
-        add(tree);
-         
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-               
-        this.pack();
-        this.setVisible(true);*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
