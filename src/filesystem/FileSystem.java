@@ -102,6 +102,7 @@ public class FileSystem {
         }
        
         Directorio directorio = new Directorio(nombre, instance.getDirectorioActual());
+        instance.getDirectorioActual().addDirectorio(directorio);
         return 0;
     }
     

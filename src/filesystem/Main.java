@@ -983,18 +983,26 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        DefaultMutableTreeNode aux;
+        TreePath tree;
+        tree = find(root,instance.getDirectorioActual().getNombre());
+        if(tree.getPathCount()-1 != 0){
+            aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
+        }
+        else
+            aux = root;
         
         
         DefaultMutableTreeNode Node = new DefaultMutableTreeNode(jTextNombreDirectorio.getText());
         Node.add(new DefaultMutableTreeNode("."));
-        root.add(Node);
+        aux.add(Node);
         model.reload(root);
         
-        TreePath tree;
-        tree = find(root,"abc");
+        //TreePath tree;
+        //tree = find(root,instance.getDirectorioActual().getNombre());
         System.out.println(tree.toString());
-        DefaultMutableTreeNode aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
-        Node.add(new DefaultMutableTreeNode("."));
+        //DefaultMutableTreeNode aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
+        Node.add(new DefaultMutableTreeNode(".a"));
         
         String nombreDir = jTextNombreDirectorio.getText().toString();
         int crearDir = FileSystem.crearDirectorio(nombreDir);
