@@ -1072,7 +1072,11 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseClicked
         // TODO add your handling code here:
-        //Directorio dirActual = 
+        Directorio dirActual = FileSystem.accederDirectorio(rutaActualEdit.getText().toString());
+        if(dirActual != null){
+            
+        }
+        
     }//GEN-LAST:event_jButton9MouseClicked
 
     /**
