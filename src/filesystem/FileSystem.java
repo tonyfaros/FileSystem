@@ -212,6 +212,19 @@ public class FileSystem {
         
     }
     
+    public static void  moverVirtualVirtualAr(String ruta, String rutaDestino,String nombreArchivo, String extension){
+        Directorio dirOr = accederDirectorio(ruta);
+        Directorio dirDes = accederDirectorio(rutaDestino);
+        
+        Archivo archivoOr = searchFile(dirOr.getListaArchivos(),nombreArchivo, extension);
+        Archivo archivoCopia = new Archivo(archivoOr);
+        instance.getDirectorioActual().getListaArchivos().remove(archivoOr);
+        dirDes.addArchivo(archivoCopia);
+        archivoCopia.setdPadre(dirDes);
+        archivoCopia.setRuta(archivoCopia, dirDes);
+        
+    }
+    
     //Copiar virtual virtual directorio
     //Recibe la ruta del directorio que quiere copiar
     public static void  copiarVirtualVirtualDir(String ruta, String rutaDestino){
@@ -219,6 +232,20 @@ public class FileSystem {
         Directorio dirDes = accederDirectorio(rutaDestino);
         Directorio copia = new Directorio(dirOr);
         
+        copia.setdPadre(dirDes);
+        
+        /*for(Archivo i: copia.getListaArchivos()){
+            i.setRuta(i, dirDes);
+        }*/
+        copia = actualizarRutaAux(copia);
+        dirDes.addDirectorio(copia);
+         
+    }
+    public static void  moverVirtualVirtualDir(String ruta, String rutaDestino){
+        Directorio dirOr = accederDirectorio(ruta);
+        Directorio dirDes = accederDirectorio(rutaDestino);
+        Directorio copia = new Directorio(dirOr);
+        instance.getDirectorioActual().getdHijo().remove(dirOr);
         copia.setdPadre(dirDes);
         
         /*for(Archivo i: copia.getListaArchivos()){

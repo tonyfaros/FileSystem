@@ -68,23 +68,31 @@ public class Main extends javax.swing.JFrame {
         DefaultTableModel modelProp = (DefaultTableModel) jTablePropiedades.getModel();
         DefaultTableModel modelCons = (DefaultTableModel) jTableConsulta.getModel();
         DefaultTableModel modelCopia = (DefaultTableModel) jTableCopiar.getModel();
+        DefaultTableModel modelMover = (DefaultTableModel) jTableMover.getModel();
+        DefaultTableModel modelEliminar = (DefaultTableModel) jTablaEliminar.getModel();
         
         model.setRowCount(0);
         modelMod.setRowCount(0);
         modelProp.setRowCount(0);
         modelCons.setRowCount(0);
         modelCopia.setRowCount(0);
+        modelMover.setRowCount(0);
+        modelEliminar.setRowCount(0);
         
         if(dirActual!= null){
             Object rowData[] = new Object[2];
             Object rowData2[] = new Object[2];
             Object rowData3[] = new Object[5];
+            Object rowData4[] = new Object[3];
             //Object rowData4[] = new Object[2];
             //ArrayList<>
             for(int i =0 ; i<dirActual.getListaArchivos().size();i++){
                 
                 rowData[0] = dirActual.getListaArchivos().get(i).getNombre()+ dirActual.getListaArchivos().get(i).getExtension();
                 rowData2[0] = dirActual.getListaArchivos().get(i).getNombre();
+                rowData4[0] = dirActual.getListaArchivos().get(i).getNombre();
+                
+                rowData4[1] = dirActual.getListaArchivos().get(i).getExtension();
                 
                 rowData3[0] = dirActual.getListaArchivos().get(i).getNombre();
                 rowData3[1] = dirActual.getListaArchivos().get(i).getExtension();
@@ -93,6 +101,7 @@ public class Main extends javax.swing.JFrame {
                 rowData3[4] = dirActual.getListaArchivos().get(i).getTamano();
                 
                 rowData[1] = "archivo";
+                rowData4[2] = "archivo";
                 rowData2[1] = dirActual.getListaArchivos().get(i).getExtension();
                 
                 model.addRow(rowData);
@@ -100,14 +109,23 @@ public class Main extends javax.swing.JFrame {
                 modelProp.addRow(rowData3);
                 modelCons.addRow(rowData2);
                 modelCopia.addRow(rowData);
+                modelMover.addRow(rowData);
+                modelEliminar.addRow(rowData4);
             }
             for(int j = 0; j<dirActual.getdHijo().size();j++){
                 
                 rowData[0] = dirActual.getdHijo().get(j).getNombre();
                 rowData[1] = "directorio";
                 
+                rowData4[0] = dirActual.getdHijo().get(j).getNombre();
+                rowData4[2] = "directorio";
+                rowData4[1] = "";
+                
+                
                 model.addRow(rowData);
                 modelCopia.addRow(rowData);
+                modelMover.addRow(rowData);
+                modelEliminar.addRow(rowData4);
             }
         }
         else{
@@ -208,7 +226,7 @@ public class Main extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
+        jTablaEliminar = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -908,6 +926,11 @@ public class Main extends javax.swing.JFrame {
         rutaDestinoEdit.setEditable(false);
 
         jButton7.setText("Mover");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -962,7 +985,7 @@ public class Main extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel21.setText("Eliminar archivo/directorio");
 
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+        jTablaEliminar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -973,7 +996,7 @@ public class Main extends javax.swing.JFrame {
                 "Nombre", "Extensión", "Tipo"
             }
         ));
-        jScrollPane8.setViewportView(jTable5);
+        jScrollPane8.setViewportView(jTablaEliminar);
 
         jButton6.setText("Eliminar");
 
@@ -1285,6 +1308,32 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        //asdf
+        int row = jTableMover.getSelectedRow();
+        int column = jTableMover.getSelectedColumn();
+        String rutaDestino = rutaDestinoEdit.getText().toString();
+        String nombre = jTableMover.getValueAt(row, column).toString();
+        //System.out.println(column);
+        
+        if(column < jTableMover.getColumnCount()-1){
+            String tipo = jTableMover.getValueAt(row, column+1).toString();
+            String[] nombreExt = nombre.split("\\.");
+            System.out.println(Arrays.toString(nombreExt));
+            if(tipo.equals("archivo")){
+                FileSystem.moverVirtualVirtualAr(rutaActualEdit.getText().toString(),rutaDestino,nombreExt[0],"."+nombreExt[1]);
+                actualizaDatos();
+            }else{
+                FileSystem.moverVirtualVirtualDir(rutaActualEdit.getText().toString()+nombre+"/",rutaDestino);
+                actualizaDatos();
+            }
+        
+        }else{
+            System.out.println("fuck");
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1393,7 +1442,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable5;
+    private javax.swing.JTable jTablaEliminar;
     private javax.swing.JTable jTableConsulta;
     private javax.swing.JTable jTableContenido;
     private javax.swing.JTable jTableCopiar;
