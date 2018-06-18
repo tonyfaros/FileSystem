@@ -37,7 +37,7 @@ public class FileSystem {
        Directorio hijo2 = new Directorio("hijo2",hijo1);
        raiz.addDirectorio(hijo1);
        hijo1.addDirectorio(hijo2);
-       Archivo ar1 = new Archivo(".txt","archivo1","01-01-01","01-01-01","asdf",2,hijo2);
+       Archivo ar1 = new Archivo(".txt","archivo1","01-01-01","01-01-01","asdf",2,hijo2,false);
        raiz.addArchivo(ar1);
        hijo1.addArchivo(ar1);
        hijo2.addArchivo(ar1);
@@ -105,7 +105,7 @@ public class FileSystem {
     
     
     //Crea archivo devuelve -1 si ya existe
-    public int crearArchivo(String extension, String nombre, String contenido){
+    public int crearArchivo(String extension, String nombre, String contenido,boolean real){
         for(Archivo i : instance.getDirectorioActual().getListaArchivos()){
             if(i.getNombre().equals(nombre) && i.getExtension().equals(extension)){
                 return -1;
@@ -115,7 +115,7 @@ public class FileSystem {
         Date date = new Date();
         String fecha  = dateFormat.format(date).toString();
         
-        Archivo archivo = new Archivo(extension, nombre, fecha, fecha,contenido,0,instance.getDirectorioActual());
+        Archivo archivo = new Archivo(extension, nombre, fecha, fecha,contenido,0,instance.getDirectorioActual(),real);
         
         
         //System.out.println(dateFormat.format(date));
@@ -140,7 +140,7 @@ public class FileSystem {
        return null;
     }
     
-    //Busca y devuelve archivo, recibe la lista de archivos, nombre y extension
+    //Busca y devuelve archivo, recibe la lista de archivos, nombre y extension   ----   PPT
     public static Archivo searchFile(ArrayList<Archivo> listaArchivos, String nombre,String extension){
         for(Archivo i : listaArchivos){
             if(i.nombre.equals(nombre) && i.extension.equals(extension)){
@@ -149,6 +149,42 @@ public class FileSystem {
         }
         return null;
     }
+    
+    //MFLE recibe nombre,extension y contenido, devuelve el archivo ya modificado si existe.
+    public static Archivo MFLE(String nombre,String extension, String contenido){
+        Archivo archivo = searchFile(instance.getDirectorioActual().getListaArchivos(),nombre,extension);
+        if(archivo != null){
+            archivo.setNombre(nombre);
+            archivo.setContenido(contenido);
+        }
+        return archivo;
+    }
+    
+    //Copiar virtual virutal archivo
+    public static void  copiarVirtualVirtualAr(String ruta, String rutaDestino,String nombreArchivo, String extension){
+        Directorio dirOr = accederDirectorio(ruta);
+        Directorio dirDes = accederDirectorio(rutaDestino);
+        
+        Archivo archivoOr = searchFile(dirOr.getListaArchivos(),nombreArchivo, extension);
+        Archivo archivoCopia = new Archivo(archivoOr);
+        archivoCopia.setdPadre(dirDes);
+        archivoCopia.setRuta(archivoCopia, dirDes);
+        
+    }
+    
+    //Copiar virtual virtual directorio
+    public static void  copiarVirtualVirtualDir(String ruta, String rutaDestino, String nombreDir){
+        Directorio dirOr = accederDirectorio(ruta);
+        Directorio dirDes = accederDirectorio(rutaDestino);
+        
+        Directorio copia = new Directorio(dirOr);
+        
+        
+      
+        
+    }
+    
+    
     
     
     
