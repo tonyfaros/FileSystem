@@ -261,7 +261,7 @@ public class Main extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         nombreArchivoEdit = new javax.swing.JTextField();
         jScrollPane12 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        rutasTotales = new javax.swing.JTextArea();
         jButton10 = new javax.swing.JButton();
         jScrollPane11 = new javax.swing.JScrollPane();
         jTree = new javax.swing.JTree();
@@ -1070,9 +1070,9 @@ public class Main extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel23.setText("Buscar");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane12.setViewportView(jTextArea1);
+        rutasTotales.setColumns(20);
+        rutasTotales.setRows(5);
+        jScrollPane12.setViewportView(rutasTotales);
 
         jButton10.setText("Buscar");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -1452,7 +1452,12 @@ public class Main extends javax.swing.JFrame {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
         String nombre = nombreArchivoEdit.getText().toString();
+        System.out.println(nombre);
         String[] nombreExt = nombre.split("\\.");
+         System.out.println(Arrays.toString(nombreExt));
+        instance.setRuta();
+        FileSystem.leer(instance.getRoot(), nombreExt[0],"", "."+nombreExt[1]);
+        rutasTotales.setText(instance.getRuta());
         
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -1573,7 +1578,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTable jTableModContenido;
     private javax.swing.JTable jTableMover;
     private javax.swing.JTable jTablePropiedades;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextCantSectores;
     private javax.swing.JTextArea jTextContenidoCons;
     private javax.swing.JTextField jTextField10;
@@ -1586,5 +1590,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField nombreEdit;
     private javax.swing.JTextField rutaActualEdit;
     private javax.swing.JTextField rutaDestinoEdit;
+    private javax.swing.JTextArea rutasTotales;
     // End of variables declaration//GEN-END:variables
 }

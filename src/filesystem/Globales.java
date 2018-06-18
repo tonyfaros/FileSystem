@@ -16,13 +16,14 @@ public class Globales {
     
     private static Directorio root;
     
-    
+    private static String rutas;
 
     public static Globales getInstance(){
         if(instance == null){
             instance = new Globales();
             directorioActual = null;
             root = null;
+            rutas = "";
         }
         return instance;
     }
@@ -43,6 +44,17 @@ public class Globales {
         Globales.root = root;
     }
     
+    public void addRuta(String ruta){
+        Globales.rutas += "\n"+ruta;
+        
+    }
     
+    public String getRuta(){
+        return rutas;
+    }
+    
+    public void setRuta(){
+        Globales.rutas = "";
+    }
     
 }
