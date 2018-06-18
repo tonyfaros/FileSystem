@@ -6,6 +6,10 @@
 package filesystem;
 
 import static java.lang.Thread.sleep;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -53,6 +58,62 @@ public class Main extends javax.swing.JFrame {
     }
     return null;
 }
+    
+    private void actualizaDatos(){
+        String rutaActual = rutaActualEdit.getText().toString();
+        Directorio dirActual = FileSystem.accederDirectorio(rutaActual);
+        
+        DefaultTableModel model = (DefaultTableModel) jTableContenido.getModel();
+        DefaultTableModel modelMod = (DefaultTableModel) jTableModContenido.getModel();
+        DefaultTableModel modelProp = (DefaultTableModel) jTablePropiedades.getModel();
+        DefaultTableModel modelCons = (DefaultTableModel) jTableConsulta.getModel();
+        DefaultTableModel modelCopia = (DefaultTableModel) jTableCopiar.getModel();
+        
+        model.setRowCount(0);
+        modelMod.setRowCount(0);
+        modelProp.setRowCount(0);
+        modelCons.setRowCount(0);
+        modelCopia.setRowCount(0);
+        
+        if(dirActual!= null){
+            Object rowData[] = new Object[2];
+            Object rowData2[] = new Object[2];
+            Object rowData3[] = new Object[5];
+            //Object rowData4[] = new Object[2];
+            //ArrayList<>
+            for(int i =0 ; i<dirActual.getListaArchivos().size();i++){
+                
+                rowData[0] = dirActual.getListaArchivos().get(i).getNombre()+ dirActual.getListaArchivos().get(i).getExtension();
+                rowData2[0] = dirActual.getListaArchivos().get(i).getNombre();
+                
+                rowData3[0] = dirActual.getListaArchivos().get(i).getNombre();
+                rowData3[1] = dirActual.getListaArchivos().get(i).getExtension();
+                rowData3[2] = dirActual.getListaArchivos().get(i).getFechaCreacion();
+                rowData3[3] = dirActual.getListaArchivos().get(i).getFechaMod();
+                rowData3[4] = dirActual.getListaArchivos().get(i).getTamano();
+                
+                rowData[1] = "archivo";
+                rowData2[1] = dirActual.getListaArchivos().get(i).getExtension();
+                
+                model.addRow(rowData);
+                modelMod.addRow(rowData2);
+                modelProp.addRow(rowData3);
+                modelCons.addRow(rowData2);
+                modelCopia.addRow(rowData);
+            }
+            for(int j = 0; j<dirActual.getdHijo().size();j++){
+                
+                rowData[0] = dirActual.getdHijo().get(j).getNombre();
+                rowData[1] = "directorio";
+                
+                model.addRow(rowData);
+                modelCopia.addRow(rowData);
+            }
+        }
+        else{
+            System.out.println("Error");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,26 +168,26 @@ public class Main extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableModContenido = new javax.swing.JTable();
         jLabel17 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jContenidoArchivo = new javax.swing.JTextArea();
         jButton5 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jTablePropiedades = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        jTableConsulta = new javax.swing.JTable();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        jTextContenidoCons = new javax.swing.JTextArea();
         jLabel18 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
-        jTable7 = new javax.swing.JTable();
+        jTableCopiar = new javax.swing.JTable();
         jLabel26 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
         jRadioButton1 = new javax.swing.JRadioButton();
@@ -134,15 +195,15 @@ public class Main extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        destinoEdit = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jTable6 = new javax.swing.JTable();
+        jTableMover = new javax.swing.JTable();
         jLabel24 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
+        rutaDestinoEdit = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
@@ -165,6 +226,12 @@ public class Main extends javax.swing.JFrame {
         jMenu17.setText("jMenu17");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Crear Memoria Virtual:");
@@ -206,9 +273,9 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jTextTamSectores)
                             .addComponent(jTextCantSectores, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel1))
-                .addGap(54, 54, 54)
+                .addGap(98, 98, 98)
                 .addComponent(jButton1)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,6 +498,11 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableContenido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableContenidoMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTableContenido);
 
         jLabel13.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
@@ -478,7 +550,7 @@ public class Main extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel14.setText("Modificar contenido");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableModContenido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -504,13 +576,18 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable2);
+        jTableModContenido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableModContenidoMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTableModContenido);
 
         jLabel17.setText("Contenido:");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane4.setViewportView(jTextArea2);
+        jContenidoArchivo.setColumns(20);
+        jContenidoArchivo.setRows(5);
+        jScrollPane4.setViewportView(jContenidoArchivo);
 
         jButton5.setText("Modificar");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -524,7 +601,7 @@ public class Main extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addContainerGap(52, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -557,7 +634,7 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(169, Short.MAX_VALUE))))
+                        .addContainerGap(170, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("MFLE", jPanel6);
@@ -565,7 +642,7 @@ public class Main extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel15.setText("Propiedades de un archivo");
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePropiedades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -591,7 +668,7 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(jTable3);
+        jScrollPane5.setViewportView(jTablePropiedades);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -621,7 +698,7 @@ public class Main extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel16.setText("Consultar Contenido");
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        jTableConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -647,12 +724,17 @@ public class Main extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane6.setViewportView(jTable4);
+        jTableConsulta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableConsultaMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(jTableConsulta);
 
-        jTextArea3.setEditable(false);
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane7.setViewportView(jTextArea3);
+        jTextContenidoCons.setEditable(false);
+        jTextContenidoCons.setColumns(20);
+        jTextContenidoCons.setRows(5);
+        jScrollPane7.setViewportView(jTextContenidoCons);
 
         jLabel18.setText("Contenido:");
 
@@ -695,7 +777,7 @@ public class Main extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel19.setText("Copiar archivo/directorio");
 
-        jTable7.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCopiar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -706,7 +788,7 @@ public class Main extends javax.swing.JFrame {
                 "Nombre", "Tipo"
             }
         ));
-        jScrollPane10.setViewportView(jTable7);
+        jScrollPane10.setViewportView(jTableCopiar);
 
         jLabel26.setText("Nombre:");
 
@@ -726,6 +808,11 @@ public class Main extends javax.swing.JFrame {
         jLabel27.setText("Ruta de la copia:");
 
         jButton8.setText("Copiar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jLabel28.setText("Directorio:");
 
@@ -760,7 +847,7 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel28)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(destinoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
@@ -777,7 +864,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(destinoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton1)
@@ -794,7 +881,7 @@ public class Main extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel20.setText("Mover archivo/directorio");
 
-        jTable6.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMover.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -805,7 +892,7 @@ public class Main extends javax.swing.JFrame {
                 "Nombre", "Tipo"
             }
         ));
-        jScrollPane9.setViewportView(jTable6);
+        jScrollPane9.setViewportView(jTableMover);
 
         jLabel24.setText("Nombre:");
 
@@ -818,7 +905,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel25.setText("Directorio:");
 
-        jTextField9.setEditable(false);
+        rutaDestinoEdit.setEditable(false);
 
         jButton7.setText("Mover");
 
@@ -846,7 +933,7 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jLabel25)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(rutaDestinoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -864,7 +951,7 @@ public class Main extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rutaDestinoEdit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton7)
                 .addContainerGap(158, Short.MAX_VALUE))
@@ -955,8 +1042,8 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -982,6 +1069,28 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        
+        String contenido = jContenidoArchivo.getText().toString();
+        
+        int row = jTableModContenido.getSelectedRow();
+        int column = jTableModContenido.getSelectedColumn();
+        String nombre = jTableModContenido.getValueAt(row, column).toString();
+        String extension = jTableModContenido.getValueAt(row, column+1).toString();
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        String fecha  = dateFormat.format(date).toString();
+        System.out.println(fecha);
+        Archivo ar = FileSystem.searchFile(instance.getDirectorioActual().getListaArchivos(), nombre, extension);
+        if(ar != null){
+            jContenidoArchivo.setText("");
+            ar.setContenido(contenido);
+            ar.setFechaMod(fecha);
+            jContenidoArchivo.setText(ar.getContenido());
+        }else{
+            System.out.println("fuck");
+        }
+        actualizaDatos();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -997,6 +1106,7 @@ public class Main extends javax.swing.JFrame {
             JFrame frame = new JFrame();
             JOptionPane.showMessageDialog(frame,"El directorio seleccionado no existe","Error",JOptionPane.ERROR_MESSAGE);
         }
+        actualizaDatos();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -1086,28 +1196,94 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        String rutaActual = rutaActualEdit.getText().toString();
-        Directorio dirActual = FileSystem.accederDirectorio(rutaActual);
-        DefaultTableModel model = (DefaultTableModel) jTableContenido.getModel();
-        model.setRowCount(0);
-        if(dirActual!= null){
-            Object rowData[] = new Object[2];
-            //ArrayList<>
-            for(int i =0 ; i<dirActual.getListaArchivos().size();i++){
-                rowData[0] = dirActual.getListaArchivos().get(i).getNombre();
-                rowData[1] = "archivo";
-                model.addRow(rowData);
-            }
-            for(int j = 0; j<dirActual.getdHijo().size();j++){
-                rowData[0] = dirActual.getdHijo().get(j).getNombre();
-                rowData[1] = "directorio";
-                model.addRow(rowData);
-            }
-        }
-        else{
-            System.out.println("Error");
-        }
+        
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jTableContenidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableContenidoMouseClicked
+        // TODO add your handling code here:
+        
+        
+        /*JTable source = (JTable)evt.getSource();
+            int row = source.rowAtPoint( evt.getPoint() );
+            int column = source.columnAtPoint( evt.getPoint() );
+            String s=source.getModel().getValueAt(row, column)+"";*/
+    }//GEN-LAST:event_jTableContenidoMouseClicked
+
+    private void jTableModContenidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableModContenidoMouseClicked
+        // TODO add your handling code here:
+        int row = jTableModContenido.getSelectedRow();
+        int column = jTableModContenido.getSelectedColumn();
+        String nombre = jTableModContenido.getValueAt(row, column).toString();
+        //System.out.println(column);
+        
+        if(column < jTableModContenido.getColumnCount()-1){
+            String extension = jTableModContenido.getValueAt(row, column+1).toString();
+        
+            Archivo ar = FileSystem.searchFile(instance.getDirectorioActual().getListaArchivos(), nombre, extension);
+            if(ar != null){
+                jContenidoArchivo.setText("");
+                jContenidoArchivo.setText(ar.getContenido());
+            }else{
+            System.out.println("fuck");
+        }
+        }else{
+            System.out.println("fuck");
+        }
+        
+      
+            
+    }//GEN-LAST:event_jTableModContenidoMouseClicked
+
+    private void jTableConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableConsultaMouseClicked
+        // TODO add your handling code here:
+        int row = jTableConsulta.getSelectedRow();
+        int column = jTableConsulta.getSelectedColumn();
+        String nombre = jTableConsulta.getValueAt(row, column).toString();
+        //System.out.println(column);
+        
+        if(column < jTableConsulta.getColumnCount()-1){
+            String extension = jTableConsulta.getValueAt(row, column+1).toString();
+        
+            Archivo ar = FileSystem.searchFile(instance.getDirectorioActual().getListaArchivos(), nombre, extension);
+            if(ar != null){
+                jTextContenidoCons.setText("");
+                jTextContenidoCons.setText(ar.getContenido());
+            }else{
+            System.out.println("fuck");
+        }
+        }else{
+            System.out.println("fuck");
+        }
+    }//GEN-LAST:event_jTableConsultaMouseClicked
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        int row = jTableCopiar.getSelectedRow();
+        int column = jTableCopiar.getSelectedColumn();
+        String rutaDestino = destinoEdit.getText().toString();
+        String nombre = jTableCopiar.getValueAt(row, column).toString();
+        //System.out.println(column);
+        
+        if(column < jTableCopiar.getColumnCount()-1){
+            String tipo = jTableCopiar.getValueAt(row, column+1).toString();
+            String[] nombreExt = nombre.split("\\.");
+            System.out.println(Arrays.toString(nombreExt));
+            if(tipo.equals("archivo")){
+                FileSystem.copiarVirtualVirtualAr(rutaActualEdit.getText().toString(),rutaDestino,nombreExt[0],"."+nombreExt[1]);
+                actualizaDatos();
+            }else{
+                FileSystem.copiarVirtualVirtualDir(rutaActualEdit.getText().toString()+nombre+"/",rutaDestino);
+                actualizaDatos();
+            }
+        
+        }else{
+            System.out.println("fuck");
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1147,6 +1323,7 @@ public class Main extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JTextArea contenidoEdit;
+    private javax.swing.JTextField destinoEdit;
     private javax.swing.JTextField extensionEdit;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -1157,6 +1334,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JTextArea jContenidoArchivo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1215,25 +1393,23 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
-    private javax.swing.JTable jTable6;
-    private javax.swing.JTable jTable7;
+    private javax.swing.JTable jTableConsulta;
     private javax.swing.JTable jTableContenido;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTable jTableCopiar;
+    private javax.swing.JTable jTableModContenido;
+    private javax.swing.JTable jTableMover;
+    private javax.swing.JTable jTablePropiedades;
     private javax.swing.JTextField jTextCantSectores;
+    private javax.swing.JTextArea jTextContenidoCons;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField jTextNombreDirectorio;
     private javax.swing.JTextField jTextRoot;
     private javax.swing.JTextField jTextTamSectores;
     private javax.swing.JTree jTree;
     private javax.swing.JTextField nombreEdit;
     private javax.swing.JTextField rutaActualEdit;
+    private javax.swing.JTextField rutaDestinoEdit;
     // End of variables declaration//GEN-END:variables
 }

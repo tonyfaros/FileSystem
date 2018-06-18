@@ -133,6 +133,10 @@ public class Archivo {
         this.real = real;
     }
     
+    public int getTamano(){
+        return this.contenido.length() * 2;
+    }
+    
     
    
 }
