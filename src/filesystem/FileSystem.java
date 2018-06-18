@@ -27,9 +27,10 @@ public class FileSystem {
     public static void main(String[] args) throws CloneNotSupportedException {
         
         
-       Main main = new Main();
-       main.setVisible(true);
-       
+       //Main main = new Main();
+      // main.setVisible(true);
+       Controlador c = new Controlador();
+       c.crearArchivo("bla", "bla", "bla");
        Directorio raiz = new Directorio("raiz",null);
        instance.setRoot(raiz);
        FileSys fileSys = new FileSys(raiz,10,500,"raiz");
@@ -62,10 +63,10 @@ public class FileSystem {
        ar2.setRuta(ar2, hijo2);
        ar3.setRuta(ar3, hijo3);
        
-       System.out.println(ar1.getRuta());
+       /*System.out.println(ar1.getRuta());
        System.out.println(ar2.getRuta());
        System.out.println(ar3.getRuta());
-        
+        */
        //copiarVirtualVirtualDir("/raiz/hijo2/hijo3/","/raiz/hijo1/");
        
        //Directorio r = accederDirectorio("/raiz/hijo1/hijo3/");
@@ -92,7 +93,7 @@ public class FileSystem {
     }
     
     //Crea un directorio, devuelve -1 si existe otro con el mismo nombre
-    public int crearDirectorio(String nombre, Directorio padre){
+    public static int crearDirectorio(String nombre){
         
         for(Directorio i : instance.getDirectorioActual().getdHijo()){
             if(i.getNombre().equals(nombre)){
@@ -100,7 +101,7 @@ public class FileSystem {
             }
         }
        
-        Directorio directorio = new Directorio(nombre, padre);
+        Directorio directorio = new Directorio(nombre, instance.getDirectorioActual());
         return 0;
     }
     
@@ -141,7 +142,7 @@ public class FileSystem {
     
     
     //Crea archivo devuelve -1 si ya existe
-    public int crearArchivo(String extension, String nombre, String contenido,boolean real){
+    public static int crearArchivo(String extension, String nombre, String contenido,boolean real){
         for(Archivo i : instance.getDirectorioActual().getListaArchivos()){
             if(i.getNombre().equals(nombre) && i.getExtension().equals(extension)){
                 return -1;
@@ -240,11 +241,5 @@ public class FileSystem {
             }
         }
         return directorio;
-    }
-    
-    
-    
-    
-    
-    
+    } 
 }
