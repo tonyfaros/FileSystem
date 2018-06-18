@@ -9,7 +9,9 @@ import static java.lang.Thread.sleep;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -969,18 +971,20 @@ public class Main extends javax.swing.JFrame {
         
         
         String rutaActual = rutaActualEdit.getText().toString();
+        System.out.println(rutaActual);
         Directorio dirActual = FileSystem.accederDirectorio(rutaActual);
         if(dirActual != null)
             instance.setDirectorioActual(dirActual);
         else{
-            //ERRORRRRRRRRRRRRRRRRRRRR
+            JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame,"El directorio seleccionado no existe","Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
-        System.out.println(root.getChildAt(0));
+        
         DefaultMutableTreeNode Node = new DefaultMutableTreeNode(jTextNombreDirectorio.getText());
         Node.add(new DefaultMutableTreeNode("."));
         root.add(Node);
@@ -996,10 +1000,13 @@ public class Main extends javax.swing.JFrame {
         int crearDir = FileSystem.crearDirectorio(nombreDir);
         if(crearDir == -1){
             //ERROOOOOOOOORRRRRRRR
+           JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame,"Error al crear el directorio","Error",JOptionPane.ERROR_MESSAGE);
         }
         else{
-            
+            System.out.println("exit");
         }
+        
         
         
       
@@ -1047,7 +1054,9 @@ public class Main extends javax.swing.JFrame {
         FileSys filesys = new FileSys(raiz,Integer.parseInt(jTextCantSectores.getText()),Integer.parseInt(jTextTamSectores.getText()),jTextRoot.getText());
         instance.setRoot(raiz);
         instance.setDirectorioActual(raiz);
-        
+        //if(FileSystem. != null){
+            //System.out.println(instance.get);
+        //}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
