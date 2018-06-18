@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.table.DefaultTableModel;
@@ -989,33 +990,49 @@ public class Main extends javax.swing.JFrame {
         if(dirActual != null)
             instance.setDirectorioActual(dirActual);
         else{
-            //ERRORRRRRRRRRRRRRRRRRRRR
+            JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame,"El directorio seleccionado no existe","Error",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
-        System.out.println(root.getChildAt(0));
+        DefaultMutableTreeNode aux;
+        TreePath tree;
+        tree = find(root,instance.getDirectorioActual().getNombre());
+        if(tree.getPathCount()-1 != 0){
+            aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
+            
+        }
+        else
+            aux = root;
+        
+        
         DefaultMutableTreeNode Node = new DefaultMutableTreeNode(jTextNombreDirectorio.getText());
         Node.add(new DefaultMutableTreeNode("."));
-        root.add(Node);
+        aux.add(Node);
         model.reload(root);
         
-        TreePath tree;
-        tree = find(root,"abc");
+        //TreePath tree;
+        //tree = find(root,instance.getDirectorioActual().getNombre());
         System.out.println(tree.toString());
-        DefaultMutableTreeNode aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
-        Node.add(new DefaultMutableTreeNode("."));
+        //DefaultMutableTreeNode aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
+        Node.add(new DefaultMutableTreeNode(".a"));
         
         String nombreDir = jTextNombreDirectorio.getText().toString();
         int crearDir = FileSystem.crearDirectorio(nombreDir);
         if(crearDir == -1){
             //ERROOOOOOOOORRRRRRRR
+           
+            JOptionPane.showMessageDialog(frame,"Error al crear el directorio","Error",JOptionPane.ERROR_MESSAGE);
         }
         else{
-            
+            JOptionPane.showMessageDialog(frame,"Ruta actualizada");
+            System.out.println("exit");
         }
+        
+        
         
         
       
