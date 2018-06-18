@@ -1004,25 +1004,12 @@ public class Main extends javax.swing.JFrame {
         tree = find(root,instance.getDirectorioActual().getNombre());
         if(tree.getPathCount()-1 != 0){
             aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
-        }
-        else
-            aux = root;
-        
-        
-<<<<<<< HEAD
-=======
-        DefaultMutableTreeNode aux;
-        TreePath tree;
-        tree = find(root,instance.getDirectorioActual().getNombre());
-        if(tree.getPathCount()-1 != 0){
-            aux = (DefaultMutableTreeNode)root.getChildAt(tree.getPathCount()-1);
             
         }
         else
             aux = root;
         
         
->>>>>>> e871e78f03759c391d675d904d484cb0ef381b4a
         DefaultMutableTreeNode Node = new DefaultMutableTreeNode(jTextNombreDirectorio.getText());
         Node.add(new DefaultMutableTreeNode("."));
         aux.add(Node);
@@ -1038,27 +1025,13 @@ public class Main extends javax.swing.JFrame {
         int crearDir = FileSystem.crearDirectorio(nombreDir);
         if(crearDir == -1){
             //ERROOOOOOOOORRRRRRRR
-<<<<<<< HEAD
-           JFrame frame = new JFrame();
-            JOptionPane.showMessageDialog(frame,"Error al crear el directorio","Error",JOptionPane.ERROR_MESSAGE);
-        }
-        else{
-=======
            
             JOptionPane.showMessageDialog(frame,"Error al crear el directorio","Error",JOptionPane.ERROR_MESSAGE);
         }
         else{
             JOptionPane.showMessageDialog(frame,"Ruta actualizada");
->>>>>>> e871e78f03759c391d675d904d484cb0ef381b4a
             System.out.println("exit");
         }
-        
-        
-        
-<<<<<<< HEAD
-=======
-        
->>>>>>> e871e78f03759c391d675d904d484cb0ef381b4a
       
         
     }//GEN-LAST:event_jButton3ActionPerformed
