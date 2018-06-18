@@ -86,7 +86,7 @@ public class Main extends javax.swing.JFrame {
         }
         //model.reload(actual);
         return actual;
-        
+    }
     
     private void actualizaDatos(){
         String rutaActual = rutaActualEdit.getText().toString();
